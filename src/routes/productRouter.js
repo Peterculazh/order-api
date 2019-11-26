@@ -3,9 +3,8 @@ const router = new express.Router();
 const Product = require('../models/Product');
 
 router.post('/product', (req, res) => {
-    const product = new Product(req.body);
-
     try {
+        const product = new Product(req.body);
         product.save();
         console.log(product);
         res.status(200).send(product);
