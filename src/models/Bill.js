@@ -3,15 +3,15 @@ const mongoose = require('mongoose');
 const billSchema = new mongoose.Schema({
     name: {
         type: String,
-        ref: 'Order.Product.name'
+        required: true
     },
     price: {
         type: Number,
-        ref: 'Order.cost'
+        required: true
     },
     orderDate: {
         type: Date,
-        ref: 'Order.createdAt'
+        required: true
     },
     createdAt: {
         type: Date,

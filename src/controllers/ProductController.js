@@ -11,7 +11,7 @@ module.exports = {
         }
     },
     async listAll(req, res) {
-        const productsList = await Product.find({});
-        res.status(200).send(productsList);
+        const productsList = await Product.findProducts({});
+        return await res.status(200).send(productsList);
     }
 }

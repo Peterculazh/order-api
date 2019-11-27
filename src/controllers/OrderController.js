@@ -9,18 +9,8 @@ module.exports = {
         try {
             const order = new Order(req.body);
             const product = await Product.findById(req.body.productId);
-            let productDate = moment(product.createdAt);
-            let now = moment(new Date());
-            let isMonth = now.diff(productDate, 'months');
-            if (isMonth > 0) {
-                price = product.price;
-                let discount = 20;
-                priceDiscount = price - (price / 100 * discount);
-                order.cost = priceDiscount.toFixed(2);
-                order.discount = discount;
-            } else {
-                order.cost = product.price;
-            }
+            order.cost = product.price;
+            order.discount = product.discount;
             order.save();
             res.status(201).send(order);
         } catch (e) {
@@ -101,13 +91,18 @@ module.exports = {
                 }).populate(['createdBy', 'productId']).exec();
             } else if (user.role === 1) {
                 if (req.body.from && req.body.to) {
-
+                    let startDate = req.body.from
                     let endDate = moment(req.body.to).add(1, 'days');
+                    delete req.body.userId
+                    delete req.body.from
+                    delete req.body.to;
+                    console.log(req.body);
                     orderList = await Order.find({
                         createdAt: {
-                            $gt: req.body.from,
+                            $gt: startDate,
                             $lte: endDate
-                        }
+                        },
+                        ...req.body
                     }).populate(['createdBy', 'productId']).exec();
                     return res.status(200).send(orderList);
                 } else {
