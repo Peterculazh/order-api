@@ -21,7 +21,9 @@ module.exports = {
         try {
             const order = await Order.findById(req.params.id).populate(['createdBy', 'productId']).exec();
             if (!order) {
-                return res.status(404).send("Order not found");
+                return res.status(404).send({
+                    error: "Order not found"
+                });
             }
             res.status(200).send(order);
         } catch (e) {
@@ -31,7 +33,9 @@ module.exports = {
     async deleteById(req, res) {
         try {
             if (!req.body.role) {
-                return res.status(401).send("Type your role adn try again");
+                return res.status(401).send({
+                    error: "Type your role adn try again"
+                });
             }
             const orderDeleted = await Order.findByIdAndDelete(req.params.id);
             if (!orderDeleted) {
@@ -46,20 +50,26 @@ module.exports = {
         try {
             const user = await User.findById(req.body.user_id);
             if (!user) {
-                return res.status(401).send("Enter your ID");
+                return res.status(401).send({
+                    error: "Enter your ID"
+                });
             }
             const status = req.body.status;
 
             const order = await Order.findById(req.params.id);
             if (!order) {
-                return res.status(404).send('No such order');
+                return res.status(404).send({
+                    error: 'No such order'
+                });
             }
             if (user.role === 2 && status === "Выполнен") {
                 order.acceptedBy = user._id;
             } else if (user.role === 3 && status === "Оплачен" && order.acceptedBy) {
                 order.confirmedBy = user._id;
             } else {
-                return res.status(401).send("Input role and check order status");
+                return res.status(401).send({
+                    error: "Input role and check order status"
+                });
             }
             order.status = status;
             order.save();
@@ -74,7 +84,9 @@ module.exports = {
             let orderList = {};
 
             if (!user) {
-                return res.status(401).send('No such user');
+                return res.status(401).send({
+                    error: 'No such user'
+                });
             } else if (user.role === 3) {
                 orderList = await Order.find({
                     $or: [{
@@ -96,7 +108,6 @@ module.exports = {
                     delete req.body.userId
                     delete req.body.from
                     delete req.body.to;
-                    console.log(req.body);
                     orderList = await Order.find({
                         createdAt: {
                             $gt: startDate,
