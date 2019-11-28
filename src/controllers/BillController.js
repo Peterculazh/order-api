@@ -32,7 +32,7 @@ module.exports = {
                 orderDate: order.createdAt,
             });
             bill.save();
-            return res.status(200).send(bill);
+            return res.status(201).send(bill);
         } catch (e) {
             return res.status(500).send(e);
         }

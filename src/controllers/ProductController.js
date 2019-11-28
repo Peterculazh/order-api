@@ -31,7 +31,7 @@ module.exports = {
         return res.status(200).send(product);
     },
     async deleteById(req, res) {
-        const product = await Product.findOneAndDelete(req.params.id);
+        const product = await Product.findByIdAndDelete(req.params.id);
         if (!product) {
             return res.status(404).send({
                 error: "No such product"

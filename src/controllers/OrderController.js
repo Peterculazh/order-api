@@ -7,6 +7,10 @@ const Product = require('../models/Product');
 module.exports = {
     async create(req, res) {
         try {
+            const user = await User.findById(req.body.createdBy);
+            if (user.role !== 3) {
+                return res.status(401).send("You cann't create orders");
+            }
             const order = new Order(req.body);
             const product = await Product.findById(req.body.productId);
             order.cost = product.price;
@@ -80,7 +84,7 @@ module.exports = {
     },
     async listAll(req, res) {
         try {
-            const user = await User.findById(req.body.userId);
+            const user = await User.findById(req.body.user_id);
             let orderList = {};
 
             if (!user) {

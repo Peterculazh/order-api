@@ -163,7 +163,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userId\": \"5ddd3eeec058fb3f44ba7e5f\",\n\t\"from\": \"2018-10-25\",\n\t\"to\": \"2019-11-27\"\n}",
+							"raw": "{\n\t\"user_id\": \"5ddd3eeec058fb3f44ba7e5f\",\n\t\"from\": \"2018-10-25\",\n\t\"to\": \"2019-11-27\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -461,7 +461,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userId\": \"5ddd3eeec058fb3f44ba7e5f\",\n\t\"from\": \"2018-10-25\",\n\t\"to\": \"2019-11-27\"\n}",
+							"raw": "{\n\t\"user_id\": \"5ddd3eeec058fb3f44ba7e5f\",\n\t\"from\": \"2018-10-25\",\n\t\"to\": \"2019-11-27\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

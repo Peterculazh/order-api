@@ -24,10 +24,14 @@ const productScheme = new mongoose.Schema({
     monthDiscount: {
         type: Boolean,
         default: 0
+    },
+    appliedDiscount: {
+        type: Boolean,
+        default: 0
     }
 });
 
-const checkMonthDiscount = async product => {
+const checkDiscount = async product => {
     if (!product.monthDiscount) {
         let productDate = moment(product.createdAt);
         let now = moment(new Date());
@@ -43,18 +47,29 @@ const checkMonthDiscount = async product => {
                 discount: product.discount,
                 monthDiscount: product.monthDiscount
             });
-            let newProduct = Product.findById(product._id);
+            let newProduct = await Product.findById(product._id);
+            return newProduct;
+        } else if (product.discount !== 0 && !product.appliedDiscount && !product.monthDiscount) {
+            price = product.price;
+            product.price = price - (price / 100 * product.discount);
+            product.appliedDiscount = true;
+            await Product.findByIdAndUpdate(product._id, {
+                price: product.price,
+                appliedDiscount: true
+            });
+            let newProduct = await Product.findById(product._id);
             return newProduct;
         }
         return product;
     }
+
     return product;
 }
 
 productScheme.statics.findProducts = async function () {
     productsList = await this.find({});
     productsList.map(async product => {
-        product = await checkMonthDiscount(product);
+        product = await checkDiscount(product);
         return product;
     });
     return productsList;
@@ -64,7 +79,7 @@ productScheme.statics.findById = async function (_id) {
     product = await this.findOne({
         _id
     });
-    newProduct = await checkMonthDiscount(product);
+    newProduct = await checkDiscount(product);
     return newProduct;
 }
 

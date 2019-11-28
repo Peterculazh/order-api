@@ -5,9 +5,9 @@ module.exports = {
         try {
             const user = new User(req.body);
             user.save();
-            return res.status(200).send(user);
+            return res.status(201).send(user);
         } catch (e) {
-            return res.status(500).send(user);
+            return res.status(500).send(e);
         }
     },
     async readById(req, res) {
@@ -20,7 +20,7 @@ module.exports = {
             }
             return res.status(200).send(user);
         } catch (e) {
-            return res.status(500).send(user);
+            return res.status(500).send(e);
         }
     },
     async updateById(req, res) {
@@ -35,7 +35,7 @@ module.exports = {
             }
             return res.status(200).send(user);
         } catch (e) {
-            return res.status(500).send(user);
+            return res.status(500).send(e);
         }
     },
     async deleteById(req, res) {
@@ -48,7 +48,7 @@ module.exports = {
             }
             return res.status(200).send(user);
         } catch (e) {
-            return res.status(500).send(user);
+            return res.status(500).send(e);
         }
     },
     async listAll(req, res) {
@@ -56,7 +56,7 @@ module.exports = {
             const userList = await User.find({});
             return res.status(200).send(userList);
         } catch (e) {
-            return res.status(500).send(user);
+            return res.status(500).send(e);
         }
     }
 }
