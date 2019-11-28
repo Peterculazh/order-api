@@ -9,7 +9,7 @@
 
 To set data in DB install npm packages and run `npm run test`. It will set data in DB and also run tests for "Typical use case" that was described in test task, some various tests and tests for each endpoints.
 
-So to start server run `npm run dev`. It should start server for you on port 3000. Port you can change in `/config/dev.env`
+So to start server run `npm run dev`. It should start server for you on port 3000. Port you can change in `/config/dev.env`. And also you can change url to Mongo.
 
 ***
 
